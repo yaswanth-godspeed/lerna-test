@@ -1,6 +1,6 @@
 {
   "name": "cron_yash",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Cron as eventsource plugin for Godspeed Framework",
   "publishConfig": {
     "access": "public"
