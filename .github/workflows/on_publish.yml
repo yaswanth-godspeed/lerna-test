@@ -44,9 +44,11 @@ jobs:
     - name: Wait before publishing
       run: sleep 10
 
+
+
     - name: Publish to NPM
       run: |
-        npx lerna publish from-git --yes
+        npx lerna publish from-git --no-verify-access
       env:
         CI: true
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
