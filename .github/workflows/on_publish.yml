@@ -48,7 +48,7 @@ jobs:
 
     - name: Publish to NPM
       run: |
-        npx lerna publish from-git --no-verify-access
+        npx lerna publish from-git --no-verify-access --yes
       env:
         CI: true
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
