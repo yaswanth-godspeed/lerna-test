@@ -48,6 +48,7 @@ jobs:
 
     - name: Publish to NPM
       run: |
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
         npx lerna publish from-git --no-verify-access --yes
       env:
         CI: true
