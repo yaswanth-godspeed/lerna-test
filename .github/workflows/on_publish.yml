@@ -32,13 +32,6 @@ jobs:
       run: |
         npm run build
 
-    - name: prepublish-commit
-      run: |
-        git commit -am "publish"
-      env:
-        CI: true
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
     - name: version update
       run: |
@@ -112,3 +105,11 @@ jobs:
 
 
 #           # npx lerna version --conventional-commits --conventional-graduate --yes
+
+    # - name: prepublish-commit
+    #   run: |
+    #     git commit -am "publish"
+    #   env:
+    #     CI: true
+    #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
