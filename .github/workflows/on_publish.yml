@@ -1,0 +1,114 @@
+
+name: Publish
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - name: "Use NodeJS 18"
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "yaswanth-godspeed"
+        git config --global user.email "yaswanth@godspeedsystems"
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: build
+      run: |
+        npm run build
+
+    - name: prepublish-commit
+      run: |
+        git commit -am "publish"
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    - name: version update
+      run: |
+        npx lerna version --conventional-commits --yes
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    - name: Wait before publishing
+      run: sleep 10
+
+    - name: Publish to NPM
+      run: |
+        npx lerna publish from-git --yes
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+# name: Publish to NPM
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   publish:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Use Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '14'
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Install dependencies
+#         run: npx lerna bootstrap
+
+#       - name: build
+#         run: npx lerna run build
+
+#       - name: user
+#         run: |
+#             git config --global user.email "yaswanth@godspeedsystems"
+#             git config --global user.name "yaswanth-godspeed"
+
+#       - name: Publish to NPM
+#         run: |
+#           npx lerna publish from-git --yes      
+#         env:
+#           CI: true
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+#       # - name: Publish to NPM
+#       #   run: |
+#       #     npx lerna version --conventional-commits --yes
+#       #     git push --follow-tags --no-verify --atomic origin main
+#       #   env:
+#       #     CI: true
+#       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#       #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
+#           # npx lerna version --conventional-commits --conventional-graduate --yes

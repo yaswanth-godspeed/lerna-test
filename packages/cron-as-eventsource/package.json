@@ -1,0 +1,23 @@
+{
+  "name": "cron_yash",
+  "version": "2.0.0",
+  "description": "Cron as eventsource plugin for Godspeed Framework",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "author": "Yaswanth <yaswanth@godspeed.systems>",
+  "devDependencies": {
+    "@types/node-cron": "^3.0.8",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@godspeedsystems/core": "latest"
+  },
+  "gitHead": "fd1e6dcbc0ad2a43a2c2561ce9c430b444523589"
+}
